@@ -1,0 +1,90 @@
+definitions:
+  main.message:
+    properties:
+      message:
+        type: string
+    type: object
+  main.todo:
+    properties:
+      id:
+        type: string
+      tash:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /todo:
+    get:
+      operationId: get-all-todos
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.todo'
+      summary: get all items in the todo list
+    post:
+      operationId: create-todo
+      parameters:
+      - description: todo data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/main.todo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.todo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.message'
+      summary: add a new item to the todo list
+  /todo/{id}:
+    delete:
+      operationId: delete-todo-by-id
+      parameters:
+      - description: todo ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.todo'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.message'
+      summary: delete a todo item by ID
+    get:
+      operationId: get-todo-by-id
+      parameters:
+      - description: todo ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.todo'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.message'
+      summary: get a todo item by ID
+swagger: "2.0"
